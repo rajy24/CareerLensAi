@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CareerLens — Your career, with a clearer direction. A career planning and job-readiness workspace for students and early-career job seekers.">
+  <title>CareerLens — Career Planning &amp; Job-Readiness Workspace</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="app-body">
+
+  <div class="app-shell">
+
+    <!-- ========================================== -->
+    <!-- MOBILE TOP BAR                             -->
+    <!-- ========================================== -->
+    <header class="mobile-topbar" aria-label="Mobile Navigation Bar">
+      <div class="mobile-brand">
+        <svg class="brand-mark-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <path d="M11 8v6M8 11h6"></path>
+        </svg>
+        <span class="brand-text">CareerLens</span>
+      </div>
+      <button id="mobile-menu-btn" class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <svg class="menu-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Backdrop for mobile drawer -->
+    <div id="mobile-overlay" class="mobile-overlay" aria-hidden="true"></div>
+
+    <!-- ========================================== -->
+    <!-- PERSISTENT LEFT SIDEBAR                    -->
+    <!-- ========================================== -->
+    <aside id="app-sidebar" class="app-sidebar" aria-label="Primary Navigation">
+      <div class="sidebar-header">
+        <div class="brand-lockup">
+          <div class="brand-icon-wrap" aria-hidden="true">
+            <svg class="brand-mark-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <path d="M11 8v6M8 11h6"></path>
+            </svg>
+          </div>
+          <div class="brand-details">
+            <span class="brand-title">CareerLens</span>
+            <span class="brand-tagline">Career Workspace</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav" role="tablist" aria-orientation="vertical">
+        <div class="nav-section-label">WORKSPACE</div>
+
+        <button class="nav-item nav-tab active" data-tab="dashboard" role="tab" aria-selected="true" aria-controls="dashboard-section">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+          <span class="nav-label">Overview</span>
+        </button>
+
+        <button class="nav-item nav-tab" data-tab="analyzer" role="tab" aria-selected="false" aria-controls="analyzer-section">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+          </svg>
+          <span class="nav-label">Job Analysis</span>
+        </button>
+
+        <button class="nav-item nav-tab" data-tab="roadmap" role="tab" aria-selected="false" aria-controls="roadmap-section">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <span class="nav-label">Learning Plan</span>
+          <span id="roadmap-badge-count" class="nav-pill" style="display:none;">0</span>
+        </button>
+
+        <button class="nav-item nav-tab" data-tab="interview" role="tab" aria-selected="false" aria-controls="interview-section">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span class="nav-label">Interview Practice</span>
+        </button>
+
+        <button class="nav-item nav-tab" data-tab="tracker" role="tab" aria-selected="false" aria-controls="tracker-section">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <span class="nav-label">Applications</span>
+          <span id="tracker-badge-count" class="nav-pill">0</span>
+        </button>
+
+        <div class="nav-section-label" style="margin-top: 1.25rem;">SYSTEM</div>
+
+        <button class="nav-item nav-tab" data-tab="about" role="tab" aria-selected="false" aria-controls="about-section">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span class="nav-label">About &amp; Method</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer Controls -->
+      <div class="sidebar-footer">
+        <div class="data-status-badge" title="All records stored privately in your browser via localStorage">
+          <span class="status-indicator-dot" aria-hidden="true"></span>
+          <span>Local Storage Active</span>
+        </div>
+        <div class="sidebar-action-buttons">
+          <button id="load-sample-btn" class="btn btn-subtle btn-xs" title="Populate realistic sample records to explore features">
+            Load Sample Data
+          </button>
+          <button id="clear-data-btn" class="btn btn-subtle-danger btn-xs" title="Clear all local data and reset workspace">
+            Reset Data
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- MAIN APPLICATION VIEWPORT                  -->
+    <!-- ========================================== -->
+    <div class="app-main-viewport">
+
+      <!-- Top Header / Context Bar -->
+      <header class="app-topbar">
+        <div class="topbar-context">
+          <h1 id="page-title" class="page-title">Overview</h1>
+          <p id="page-subtitle" class="page-subtitle">Your career, with a clearer direction.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary btn-sm" onclick="window.navigateToTab('analyzer')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            Analyze Job
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="window.openJobModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add Application
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Scrollable Content -->
+      <main class="app-content-area">
+
+        <!-- ========================================== -->
+        <!-- SECTION 1: OVERVIEW                        -->
+        <!-- ========================================== -->
+        <section id="dashboard-section" class="tab-content active" role="tabpanel" aria-labelledby="page-title">
+          
+          <!-- Welcome Hero / Priority Callout -->
+          <div class="overview-hero card">
+            <div class="overview-hero-text">
+              <span class="pill-label">Career Workspace</span>
+              <h2>Welcome to CareerLens</h2>
+              <p>
+                Evaluate your technical readiness for target roles, pinpoint missing qualifications with transparent keyword matching, follow a step-by-step learning plan, and track your active job applications in one focused workspace.
+              </p>
+            </div>
+            <div class="overview-hero-actions">
+              <button class="btn btn-primary" onclick="window.navigateToTab('analyzer')">
+                Analyze a Job Description &rarr;
+              </button>
+              <button class="btn btn-secondary" onclick="window.navigateToTab('tracker')">
+                View Applications
+              </button>
+            </div>
+          </div>
+
+          <!-- Progress Summaries: Restrained Metrics Row -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Latest Match Score</span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-value" id="dash-match-score">--%</span>
+              </div>
+              <div class="metric-subtext" id="dash-match-subtext">No analysis run yet</div>
+              <div class="metric-progress-track">
+                <div class="metric-progress-bar" id="dash-match-fill" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Profile Skills</span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-value" id="dash-student-skills-count">0</span>
+              </div>
+              <div class="metric-subtext" id="dash-student-skills-subtext">Competencies in your profile</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Identified Skill Gaps</span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-value" id="dash-missing-skills-count">0</span>
+              </div>
+              <div class="metric-subtext" id="dash-missing-subtext">Skills to prioritize learning</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Tracked Applications</span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-value" id="dash-tracked-jobs-count">0</span>
+              </div>
+              <div class="metric-subtext" id="dash-tracked-subtext">0 active in pipeline</div>
+            </div>
+          </div>
+
+          <!-- Overview Dual Panels: Readiness Summary & Pipeline -->
+          <div class="overview-split-grid">
+            <!-- Left Panel: Recent Analysis Breakdown -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Recent Job Analysis</h3>
+                  <p class="card-subtitle">Compatibility breakdown from your last evaluation</p>
+                </div>
+                <button class="btn btn-subtle btn-sm" onclick="window.navigateToTab('analyzer')">Open Analyzer &rarr;</button>
+              </div>
+              <div class="card-body" id="dash-analysis-summary-container">
+                <div class="empty-state">
+                  <div class="empty-icon-wrap" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                  </div>
+                  <h4>No Analysis Executed Yet</h4>
+                  <p>Paste a job description in Job Analysis to see your compatibility score and missing qualifications.</p>
+                  <button class="btn btn-sm btn-primary" onclick="window.navigateToTab('analyzer')">Analyze First Job</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Panel: Application Pipeline Snapshot -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Application Pipeline</h3>
+                  <p class="card-subtitle">Current status distribution across your search</p>
+                </div>
+                <button class="btn btn-subtle btn-sm" onclick="window.navigateToTab('tracker')">Manage &rarr;</button>
+              </div>
+              <div class="card-body">
+                <div class="pipeline-flow-bar" id="dash-pipeline-counters">
+                  <div class="pipeline-stage stage-wishlist">
+                    <span class="stage-count" id="count-wishlist">0</span>
+                    <span class="stage-name">Wishlist</span>
+                  </div>
+                  <div class="pipeline-stage stage-applied">
+                    <span class="stage-count" id="count-applied">0</span>
+                    <span class="stage-name">Applied</span>
+                  </div>
+                  <div class="pipeline-stage stage-interviewing">
+                    <span class="stage-count" id="count-interviewing">0</span>
+                    <span class="stage-name">Interviewing</span>
+                  </div>
+                  <div class="pipeline-stage stage-offer">
+                    <span class="stage-count" id="count-offer">0</span>
+                    <span class="stage-name">Offer</span>
+                  </div>
+                  <div class="pipeline-stage stage-rejected">
+                    <span class="stage-count" id="count-rejected">0</span>
+                    <span class="stage-name">Archived</span>
+                  </div>
+                </div>
+
+                <div class="recent-records-container" id="dash-recent-jobs">
+                  <!-- Populated via script.js -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECTION 2: JOB ANALYSIS                   -->
+        <!-- ========================================== -->
+        <section id="analyzer-section" class="tab-content" role="tabpanel" aria-labelledby="page-title">
+          <div class="view-intro">
+            <h2>Job Readiness &amp; Skill Gap Analysis</h2>
+            <p>Input your current skillset and paste a job description. The system compares both using deterministic keyword matching and calculates your match percentage.</p>
+          </div>
+
+          <div class="analyzer-two-col">
+            <!-- Left Column: Student Skills Input -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">1. Your Current Skills</h3>
+                  <p class="card-subtitle">Technical proficiencies, frameworks, tools, and libraries</p>
+                </div>
+                <span class="badge" id="skill-count-badge">0 skills</span>
+              </div>
+              <div class="card-body">
+                <div class="input-action-row">
+                  <input type="text" id="skill-input" class="form-input" placeholder="e.g. Python, React, SQL, Git, Docker" autocomplete="off">
+                  <button id="add-skill-btn" class="btn btn-secondary">Add</button>
+                </div>
+                <p class="field-hint">Press Enter or click Add. Separate multiple skills with commas.</p>
+
+                <!-- Quick Presets -->
+                <div class="preset-chips-wrap">
+                  <span class="preset-label">Sample Profiles:</span>
+                  <button class="preset-chip" data-preset="frontend">Frontend</button>
+                  <button class="preset-chip" data-preset="backend">Backend (Python)</button>
+                  <button class="preset-chip" data-preset="fullstack">Full-Stack</button>
+                  <button class="preset-chip" data-preset="data">Data Analyst</button>
+                </div>
+
+                <!-- Skill Tags Box -->
+                <div class="skills-box">
+                  <div class="skills-box-header">
+                    <span class="caption-label">Profile Skills</span>
+                    <button id="clear-skills-btn" class="btn-text-danger" style="display:none;">Clear All</button>
+                  </div>
+                  <div id="skills-list" class="skills-container">
+                    <div class="empty-state-sm">No skills added yet. Add skills above or select a sample profile.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Target Job Description Input -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">2. Target Job Description</h3>
+                  <p class="card-subtitle">Paste responsibilities and requirements from any job posting</p>
+                </div>
+                <div class="dropdown-wrap">
+                  <button id="sample-jd-btn" class="btn btn-subtle btn-sm dropdown-toggle">
+                    Load Sample Job &dtrif;
+                  </button>
+                  <div id="sample-jd-menu" class="dropdown-menu">
+                    <button class="dropdown-item" data-sample="frontend">Junior Frontend Developer (React)</button>
+                    <button class="dropdown-item" data-sample="backend">Junior Backend Developer (Python / Django)</button>
+                    <button class="dropdown-item" data-sample="fullstack">Entry-Level Full Stack Engineer</button>
+                    <button class="dropdown-item" data-sample="data">Junior Data Analyst</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group mb-2">
+                  <textarea id="jd-input" class="form-textarea" rows="11" placeholder="Paste the job description or requirements text here...
+
+Example:
+We are looking for a Junior Frontend Developer.
+Requirements:
+- Strong proficiency in HTML, CSS, JavaScript (ES6+)
+- Hands-on experience with React and Tailwind CSS
+- Familiarity with Git, REST APIs, and TypeScript"></textarea>
+                </div>
+
+                <div class="analyzer-actions-row">
+                  <button id="run-analysis-btn" class="btn btn-primary">
+                    Analyze Compatibility
+                  </button>
+                  <button id="clear-jd-btn" class="btn btn-secondary">Clear</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analysis Results Section (Rendered dynamically) -->
+          <div id="analysis-results-wrapper" class="analysis-results-wrapper" style="display:none;">
+            <div class="card results-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Analysis Results</h3>
+                  <p class="card-subtitle">Detailed match evaluation and detected skill requirements</p>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="window.navigateToTab('roadmap')">
+                  Open Learning Plan &rarr;
+                </button>
+              </div>
+              <div class="card-body">
+                <!-- Score Breakdown Row -->
+                <div class="analysis-summary-banner">
+                  <div class="score-display-block">
+                    <div class="score-display-large" id="results-percentage">--%</div>
+                    <span class="score-display-label">Match Score</span>
+                  </div>
+
+                  <div class="score-narrative-block">
+                    <div class="status-badge-row">
+                      <span id="readiness-level-badge" class="badge">Evaluating...</span>
+                    </div>
+                    <h4 id="readiness-headline" class="results-heading">Compatibility Overview</h4>
+                    <p id="readiness-description" class="results-text">Summary narrative will appear here.</p>
+                    
+                    <div class="results-metric-chips">
+                      <span class="result-chip chip-matched"><strong id="res-matched-count">0</strong> Matched Skills</span>
+                      <span class="result-chip chip-missing"><strong id="res-missing-count">0</strong> Missing Skills</span>
+                      <span class="result-chip chip-total"><strong id="res-total-count">0</strong> Detected in Job</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Hidden SVG circle to maintain script compatibility without flashy UI -->
+                <svg style="display:none;" viewBox="0 0 120 120">
+                  <circle id="score-circle-bar" cx="60" cy="60" r="50"></circle>
+                </svg>
+
+                <!-- Comparison Columns: Matched vs Missing -->
+                <div class="comparison-grid">
+                  <!-- Matched Column -->
+                  <div class="comparison-panel panel-matched">
+                    <div class="panel-header">
+                      <div>
+                        <h4>Matched Qualifications (<span id="matched-badge-num">0</span>)</h4>
+                        <span class="panel-sub">Found in both your profile and the job description</span>
+                      </div>
+                    </div>
+                    <div id="matched-skills-list" class="skills-pill-wrap">
+                      <!-- Populated via script.js -->
+                    </div>
+                  </div>
+
+                  <!-- Missing Column -->
+                  <div class="comparison-panel panel-missing">
+                    <div class="panel-header">
+                      <div>
+                        <h4>Skill Gaps (<span id="missing-badge-num">0</span>)</h4>
+                        <span class="panel-sub">Requirements detected in the job posting that are not yet in your profile</span>
+                      </div>
+                    </div>
+                    <div id="missing-skills-list" class="skills-pill-wrap">
+                      <!-- Populated via script.js -->
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Methodology / Formula Disclosure (Optional, non-intrusive) -->
+                <details class="method-disclosure">
+                  <summary class="disclosure-summary">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="16" x2="12" y2="12"></line>
+                      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    How this match score is computed
+                  </summary>
+                  <div class="disclosure-content" id="formula-breakdown-content">
+                    <!-- Populated via script.js -->
+                  </div>
+                </details>
+
+                <div class="results-footer-callout">
+                  <span>Next Step: Review your customized learning plan to address missing skills.</span>
+                  <button class="btn btn-primary btn-sm" onclick="window.navigateToTab('roadmap')">
+                    View Learning Plan &rarr;
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECTION 3: LEARNING PLAN (ROADMAP)        -->
+        <!-- ========================================== -->
+        <section id="roadmap-section" class="tab-content" role="tabpanel" aria-labelledby="page-title">
+          <div class="view-intro">
+            <h2>Prioritized Learning Plan</h2>
+            <p>Actionable study plan organized by priority level to help you systematically acquire missing qualifications. Mark items as completed to track your progress.</p>
+          </div>
+
+          <!-- Controls & Progress Toolbar -->
+          <div class="toolbar-card card">
+            <div class="toolbar-progress-group">
+              <span class="progress-label">Completion Status: <strong id="roadmap-completed-count">0</strong> of <strong id="roadmap-total-skills-count">0</strong> skills mastered</span>
+              <div class="progress-track">
+                <div class="progress-fill" id="roadmap-progress-fill" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="filter-pills-group">
+              <button class="filter-pill active filter-roadmap-btn" data-filter="all">All Priorities</button>
+              <button class="filter-pill filter-roadmap-btn" data-filter="high">High Priority</button>
+              <button class="filter-pill filter-roadmap-btn" data-filter="medium">Medium</button>
+              <button class="filter-pill filter-roadmap-btn" data-filter="low">Supplementary</button>
+            </div>
+          </div>
+
+          <!-- Learning Cards Container -->
+          <div id="roadmap-container" class="roadmap-list-container">
+            <!-- Populated dynamically via script.js -->
+            <div class="empty-state">
+              <div class="empty-icon-wrap" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+              </div>
+              <h4>No Learning Plan Generated Yet</h4>
+              <p>Analyze a job description first to identify your specific gaps, or load our standard foundational curriculum.</p>
+              <div class="empty-actions-row">
+                <button class="btn btn-primary btn-sm" onclick="window.navigateToTab('analyzer')">Analyze a Job</button>
+                <button class="btn btn-secondary btn-sm" id="load-default-roadmap-btn">Load Core Curriculum</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECTION 4: INTERVIEW PRACTICE             -->
+        <!-- ========================================== -->
+        <section id="interview-section" class="tab-content" role="tabpanel" aria-labelledby="page-title">
+          <div class="view-intro">
+            <h2>Role-Specific Interview Practice</h2>
+            <p>Sample technical concepts, coding problems, and behavioral questions organized by role. Review model answers and track questions you have practiced.</p>
+          </div>
+
+          <!-- Interview Filters Bar -->
+          <div class="toolbar-card card">
+            <div class="filters-row">
+              <div class="filter-field">
+                <label for="interview-role-select" class="field-label">Target Role</label>
+                <select id="interview-role-select" class="form-select">
+                  <option value="all">All Roles</option>
+                  <option value="frontend">Frontend Developer</option>
+                  <option value="backend">Backend Developer</option>
+                  <option value="fullstack">Full Stack Engineer</option>
+                  <option value="data">Data Analyst</option>
+                  <option value="general">Software Engineering (General)</option>
+                </select>
+              </div>
+
+              <div class="filter-field">
+                <label class="field-label">Category</label>
+                <div class="filter-pills-group" id="interview-category-filters">
+                  <button class="filter-pill active cat-pill" data-category="all">All (<span id="cat-count-all">0</span>)</button>
+                  <button class="filter-pill cat-pill" data-category="technical">Technical (<span id="cat-count-technical">0</span>)</button>
+                  <button class="filter-pill cat-pill" data-category="coding">Coding / DSA (<span id="cat-count-coding">0</span>)</button>
+                  <button class="filter-pill cat-pill" data-category="hr">Behavioral (<span id="cat-count-hr">0</span>)</button>
+                </div>
+              </div>
+
+              <div class="filter-field search-field">
+                <label for="interview-search" class="field-label">Search Questions</label>
+                <input type="text" id="interview-search" class="form-input" placeholder="Search by topic, concept...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Practice Summary Bar -->
+          <div class="sub-toolbar-status">
+            <span>Practiced: <strong id="interview-practiced-count">0</strong> of <strong id="interview-total-count">0</strong> questions</span>
+            <button id="reset-practice-btn" class="btn-text-subtle">Reset Practice Status</button>
+          </div>
+
+          <!-- Curated Disclaimer Note -->
+          <div class="inline-notice">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>Questions and guidance below are curated reference prompts designed for interview preparation and study.</span>
+          </div>
+
+          <!-- Questions Accordion List -->
+          <div id="interview-questions-list" class="questions-accordion">
+            <!-- Populated dynamically via script.js -->
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECTION 5: APPLICATIONS (JOB TRACKER)     -->
+        <!-- ========================================== -->
+        <section id="tracker-section" class="tab-content" role="tabpanel" aria-labelledby="page-title">
+          <div class="view-intro">
+            <h2>Application Tracker</h2>
+            <p>Manage your active job and internship applications in one organized pipeline. Records are stored locally in your browser.</p>
+          </div>
+
+          <!-- Status Filters Row -->
+          <div class="tracker-summary-grid">
+            <div class="tracker-stat-box" data-status-filter="all">
+              <span class="stat-number" id="tracker-total-stat">0</span>
+              <span class="stat-name">All Applications</span>
+            </div>
+            <div class="tracker-stat-box stat-wishlist" data-status-filter="Wishlist">
+              <span class="stat-number" id="tracker-wishlist-stat">0</span>
+              <span class="stat-name">Wishlist</span>
+            </div>
+            <div class="tracker-stat-box stat-applied" data-status-filter="Applied">
+              <span class="stat-number" id="tracker-applied-stat">0</span>
+              <span class="stat-name">Applied</span>
+            </div>
+            <div class="tracker-stat-box stat-interviewing" data-status-filter="Interviewing">
+              <span class="stat-number" id="tracker-interviewing-stat">0</span>
+              <span class="stat-name">Interviewing</span>
+            </div>
+            <div class="tracker-stat-box stat-offer" data-status-filter="Offer">
+              <span class="stat-number" id="tracker-offer-stat">0</span>
+              <span class="stat-name">Offer</span>
+            </div>
+            <div class="tracker-stat-box stat-rejected" data-status-filter="Rejected">
+              <span class="stat-number" id="tracker-rejected-stat">0</span>
+              <span class="stat-name">Archived</span>
+            </div>
+          </div>
+
+          <!-- Applications Controls & Search -->
+          <div class="toolbar-card card">
+            <div class="table-controls-left">
+              <div class="search-input-wrap">
+                <svg class="search-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="tracker-search-input" class="form-input search-input-field" placeholder="Search by company or role...">
+              </div>
+              <select id="tracker-status-filter" class="form-select filter-select-field">
+                <option value="all">All Statuses</option>
+                <option value="Wishlist">Wishlist</option>
+                <option value="Applied">Applied</option>
+                <option value="Interviewing">Interviewing</option>
+                <option value="Offer">Offer</option>
+                <option value="Rejected">Archived / Rejected</option>
+              </select>
+            </div>
+            <div class="table-controls-right">
+              <button id="add-job-btn" class="btn btn-primary btn-sm">
+                + New Application
+              </button>
+            </div>
+          </div>
+
+          <!-- Applications Table -->
+          <div class="table-card card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Date Applied</th>
+                    <th>Status</th>
+                    <th>Key Skills / Notes</th>
+                    <th>Posting</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="tracker-tbody">
+                  <!-- Populated dynamically via script.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty State for Applications -->
+            <div id="tracker-empty-state" class="empty-state" style="display:none;">
+              <div class="empty-icon-wrap" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+              </div>
+              <h4>No Applications Tracked Yet</h4>
+              <p>Keep your job search organized by recording your active submissions and target opportunities.</p>
+              <button class="btn btn-primary btn-sm" onclick="window.openJobModal()">Add First Application</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECTION 6: ABOUT & METHODOLOGY            -->
+        <!-- ========================================== -->
+        <section id="about-section" class="tab-content" role="tabpanel" aria-labelledby="page-title">
+          <div class="view-intro">
+            <h2>About CareerLens &amp; Methodology</h2>
+            <p>Product architecture, matching mechanics, data privacy standards, and system design specifications.</p>
+          </div>
+
+          <div class="about-grid">
+            <!-- Card 1: Product Overview -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Product Overview</h3>
+                  <p class="card-subtitle">Purpose and design objectives</p>
+                </div>
+              </div>
+              <div class="card-body prose">
+                <p>
+                  <strong>CareerLens</strong> is a focused career planning and job-readiness workspace. It helps students and early-career job seekers navigate the transition from learning to employment with clarity and structure.
+                </p>
+                <p>
+                  Rather than relying on opaque black-box scoring systems, CareerLens gives users full visibility into how their skills compare with industry postings, what specific competencies are missing, and what concrete steps will bridge those gaps.
+                </p>
+                <ul class="styled-bullet-list">
+                  <li><strong>Deterministic &amp; Explainable:</strong> Match percentages are computed through clear set-intersection arithmetic.</li>
+                  <li><strong>Private by Design:</strong> Your profile data and job search notes stay in your browser via <code>localStorage</code>.</li>
+                  <li><strong>Zero External Dependencies:</strong> Fully functional offline without requiring third-party subscriptions or API keys.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Card 2: Matching Methodology -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">How Skill Matching Works</h3>
+                  <p class="card-subtitle">Deterministic keyword extraction and comparison algorithm</p>
+                </div>
+              </div>
+              <div class="card-body prose">
+                <ol class="styled-numbered-list">
+                  <li>
+                    <strong>Text Normalization:</strong> The job description text is cleaned and standardized to lowercase, preserving technology identifiers like <code>c++</code>, <code>c#</code>, <code>.net</code>, and <code>node.js</code>.
+                  </li>
+                  <li>
+                    <strong>Token-Boundary Matching:</strong> Keywords are extracted using strict boundary patterns so substring collisions do not occur (e.g. <code>java</code> does not trigger <code>javascript</code>, and <code>c</code> does not match <code>css</code>).
+                  </li>
+                  <li>
+                    <strong>Synonym &amp; Alias Resolution:</strong> Common abbreviations and naming variations are mapped to canonical keys (e.g. <code>react.js</code> &rarr; <code>react</code>, <code>postgres</code> &rarr; <code>postgresql</code>, <code>ts</code> &rarr; <code>typescript</code>).
+                  </li>
+                  <li>
+                    <strong>Set Intersection Calculation:</strong>
+                    The system identifies matched skills ($S_{\text{Matched}} = S_{\text{Profile}} \cap S_{\text{Job}}$) and missing skills ($S_{\text{Missing}} = S_{\text{Job}} \setminus S_{\text{Profile}}$).
+                    <div class="formula-block">
+                      \(\text{Match Percentage} = \left(\frac{|S_{\text{Matched}}|}{|S_{\text{Job Detected}}|}\right) \times 100\%\)
+                    </div>
+                  </li>
+                  <li>
+                    <strong>Zero-Denominator Guard:</strong> If no valid technical competencies are detected in the job description, the application clearly requests a more detailed requirements section rather than producing an arbitrary 0% score.
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Card 3: System Architecture & Future Expansion -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Architecture &amp; Future Backend Integration</h3>
+                  <p class="card-subtitle">Modular design for optional backend AI proxies</p>
+                </div>
+              </div>
+              <div class="card-body prose">
+                <p>
+                  CareerLens is built as a pure client-side application using semantic HTML5, modern CSS3, and vanilla JavaScript.
+                </p>
+                <div class="arch-flow-diagram" aria-label="System architecture diagram">
+                  <div class="arch-node">
+                    <span class="node-label">Client Application</span>
+                    <span class="node-sub">index.html &bull; script.js</span>
+                    <span class="node-tag">Local Evaluation</span>
+                  </div>
+                  <div class="arch-connector">&rarr; Optional Proxy &rarr;</div>
+                  <div class="arch-node">
+                    <span class="node-label">Backend Gateway</span>
+                    <span class="node-sub">Node.js / Express</span>
+                    <span class="node-tag">Secure Key Storage</span>
+                  </div>
+                  <div class="arch-connector">&rarr; API &rarr;</div>
+                  <div class="arch-node">
+                    <span class="node-label">LLM Provider</span>
+                    <span class="node-sub">Gemini / Claude / OpenAI</span>
+                    <span class="node-tag">Semantic Analysis</span>
+                  </div>
+                </div>
+                <p class="arch-note">
+                  <strong>Security Note:</strong> The modular adapter pattern in <code>script.js</code> (<code>aiService</code>) demonstrates how an enterprise or institutional deployment can route requests through a secure server proxy to protect sensitive API credentials from client inspection.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Minimal Product Footer -->
+      <footer class="app-footer">
+        <div class="footer-inner">
+          <span><strong>CareerLens</strong> &mdash; Your career, with a clearer direction.</span>
+          <span class="footer-meta">Client-Side Architecture &bull; Local Storage &bull; Version 2.0</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: ADD / EDIT JOB APPLICATION          -->
+  <!-- ========================================== -->
+  <div id="job-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modal-title" class="modal-title">Add Job Application</h3>
+          <button id="modal-close-btn" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+        </div>
+        <form id="job-form">
+          <input type="hidden" id="job-id-input">
+          <div class="modal-body">
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="company-input" class="form-label">Company Name <span class="required-indicator">*</span></label>
+                <input type="text" id="company-input" class="form-input" placeholder="e.g. Acme Corp, Stripe, Microsoft" required>
+                <div class="field-error" id="company-error"></div>
+              </div>
+              <div class="form-group col-6">
+                <label for="role-input" class="form-label">Role Title <span class="required-indicator">*</span></label>
+                <input type="text" id="role-input" class="form-input" placeholder="e.g. Frontend Engineer, Product Analyst" required>
+                <div class="field-error" id="role-error"></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="status-input" class="form-label">Current Status</label>
+                <select id="status-input" class="form-select">
+                  <option value="Wishlist">Wishlist</option>
+                  <option value="Applied" selected>Applied</option>
+                  <option value="Interviewing">Interviewing</option>
+                  <option value="Offer">Offer</option>
+                  <option value="Rejected">Archived / Rejected</option>
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="date-input" class="form-label">Application Date</label>
+                <input type="date" id="date-input" class="form-input">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="job-url-input" class="form-label">Job Posting URL</label>
+              <input type="url" id="job-url-input" class="form-input" placeholder="https://company.com/careers/...">
+            </div>
+
+            <div class="form-group">
+              <label for="job-skills-input" class="form-label">Key Required Skills (comma separated)</label>
+              <input type="text" id="job-skills-input" class="form-input" placeholder="e.g. React, TypeScript, GraphQL">
+            </div>
+
+            <div class="form-group">
+              <label for="notes-input" class="form-label">Notes &amp; Follow-up Logs</label>
+              <textarea id="notes-input" class="form-textarea" rows="3" placeholder="e.g. Referred by contact. Technical screen on Thursday. Focus on system design."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="modal-cancel-btn" class="btn btn-secondary">Cancel</button>
+            <button type="submit" id="modal-save-btn" class="btn btn-primary">Save Application</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
