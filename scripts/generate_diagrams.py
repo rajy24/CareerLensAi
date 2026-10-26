@@ -7,395 +7,460 @@ import matplotlib.patches as patches
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'report_assets', 'diagrams')
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Common styling
+# Common academic styling: pure black and white, clean fonts
 plt.rcParams['font.family'] = 'DejaVu Sans'
-plt.rcParams['font.size'] = 10
+plt.rcParams['font.size'] = 9.5
+plt.rcParams['text.color'] = '#000000'
+plt.rcParams['axes.edgecolor'] = '#000000'
 
 # -------------------------------------------------------------
 # 1. DFD Level 0 (Context Diagram)
 # -------------------------------------------------------------
 def create_dfd_level_0():
-    fig, ax = plt.subplots(figsize=(10, 6), dpi=300)
+    fig, ax = plt.subplots(figsize=(9, 4.8), dpi=300)
     ax.set_xlim(0, 10)
-    ax.set_ylim(0, 6)
+    ax.set_ylim(0, 5)
     ax.axis('off')
 
-    # Central Process Circle
-    process = patches.Circle((5, 3), 1.35, edgecolor='#1e3a8a', facecolor='#eff6ff', linewidth=2.5, zorder=2)
+    # Central Process Circle (CareerLens AI)
+    process = patches.Circle((5, 2.5), 1.2, edgecolor='#000000', facecolor='#ffffff', linewidth=1.5, zorder=2)
     ax.add_patch(process)
-    ax.text(5, 3.2, '0.0', ha='center', va='center', fontsize=12, fontweight='bold', color='#1e3a8a')
-    ax.text(5, 2.8, 'CareerLens AI\nCareer Planning &\nJob-Matching System', ha='center', va='center', fontsize=10, fontweight='bold', color='#0f172a')
+    ax.text(5, 2.7, '0.0', ha='center', va='center', fontsize=11, fontweight='bold')
+    ax.text(5, 2.3, 'CareerLens AI\nCareer Planning &\nJob-Matching System', ha='center', va='center', fontsize=9.5)
 
     # External Entity: Student / Job Seeker (Left)
-    entity_user = patches.Rectangle((0.5, 2.2), 2.2, 1.6, edgecolor='#0f172a', facecolor='#f8fafc', linewidth=2)
+    entity_user = patches.Rectangle((0.4, 1.7), 2.2, 1.6, edgecolor='#000000', facecolor='#ffffff', linewidth=1.5)
     ax.add_patch(entity_user)
-    ax.text(1.6, 3.0, 'Student /\nJob Seeker', ha='center', va='center', fontsize=10, fontweight='bold', color='#0f172a')
+    ax.text(1.5, 2.5, 'Student /\nJob Seeker', ha='center', va='center', fontsize=10, fontweight='bold')
 
-    # External Entity: Hiring Market / Target JDs (Right)
-    entity_target = patches.Rectangle((7.3, 2.2), 2.2, 1.6, edgecolor='#0f172a', facecolor='#f8fafc', linewidth=2)
+    # External Entity: Target Employers / Job Descriptions (Right)
+    entity_target = patches.Rectangle((7.4, 1.7), 2.2, 1.6, edgecolor='#000000', facecolor='#ffffff', linewidth=1.5)
     ax.add_patch(entity_target)
-    ax.text(8.4, 3.0, 'Target Employers /\nJob Descriptions', ha='center', va='center', fontsize=10, fontweight='bold', color='#0f172a')
+    ax.text(8.5, 2.5, 'Target Employers /\nJob Descriptions', ha='center', va='center', fontsize=10, fontweight='bold')
 
-    # Arrows Left to Process
-    ax.annotate('', xy=(3.65, 3.3), xytext=(2.7, 3.3),
-                arrowprops=dict(arrowstyle="->", color="#2563eb", lw=1.8))
-    ax.text(3.17, 3.45, 'Profile Skills, Resume Text,\nApplication Updates', ha='center', va='bottom', fontsize=8, color='#1e293b')
+    # Arrows Left -> Process
+    ax.annotate('', xy=(3.8, 2.8), xytext=(2.6, 2.8),
+                arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+    ax.text(3.2, 2.95, 'Profile Skills, Résumé Text,\nApplication Updates', ha='center', va='bottom', fontsize=8)
 
-    # Arrows Process to Left
-    ax.annotate('', xy=(2.7, 2.7), xytext=(3.65, 2.7),
-                arrowprops=dict(arrowstyle="->", color="#059669", lw=1.8))
-    ax.text(3.17, 2.35, 'Match Scores, Gap Roadmaps,\nInterview Drills & Analytics', ha='center', va='top', fontsize=8, color='#1e293b')
+    # Arrows Process -> Left
+    ax.annotate('', xy=(2.6, 2.2), xytext=(3.8, 2.2),
+                arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+    ax.text(3.2, 2.05, 'Match Scores, Learning Roadmaps,\nInterview Feedback', ha='center', va='top', fontsize=8)
 
-    # Arrows Right to Process
-    ax.annotate('', xy=(6.35, 3.3), xytext=(7.3, 3.3),
-                arrowprops=dict(arrowstyle="->", color="#2563eb", lw=1.8))
-    ax.text(6.82, 3.45, 'Job Postings, Role\nQualifications & Criteria', ha='center', va='bottom', fontsize=8, color='#1e293b')
+    # Arrows Right -> Process
+    ax.annotate('', xy=(6.2, 2.8), xytext=(7.4, 2.8),
+                arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+    ax.text(6.8, 2.95, 'Job Postings, Role\nQualifications & Criteria', ha='center', va='bottom', fontsize=8)
 
-    # Arrows Process to Right
-    ax.annotate('', xy=(7.3, 2.7), xytext=(6.35, 2.7),
-                arrowprops=dict(arrowstyle="->", color="#059669", lw=1.8))
-    ax.text(6.82, 2.35, 'Tracking Application Status,\nRole Compatibility Records', ha='center', va='top', fontsize=8, color='#1e293b')
+    # Arrows Process -> Right
+    ax.annotate('', xy=(7.4, 2.2), xytext=(6.2, 2.2),
+                arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+    ax.text(6.8, 2.05, 'Application Tracking Status,\nCandidate Compatibility', ha='center', va='top', fontsize=8)
 
-    ax.set_title('Figure 6.1: Data Flow Diagram (DFD) Level 0 — Context Level Diagram', fontsize=12, fontweight='bold', pad=15)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_1_dfd_level_0.png'), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_1_dfd_level_0.png'), bbox_inches='tight', facecolor='#ffffff')
     plt.close()
 
 # -------------------------------------------------------------
 # 2. DFD Level 1 (Decomposition Diagram)
 # -------------------------------------------------------------
 def create_dfd_level_1():
-    fig, ax = plt.subplots(figsize=(11, 7.5), dpi=300)
-    ax.set_xlim(0, 11)
-    ax.set_ylim(0, 8)
+    fig, ax = plt.subplots(figsize=(10, 6.8), dpi=300)
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 7)
     ax.axis('off')
 
-    # Entities
-    user_box = patches.Rectangle((0.4, 3.2), 1.8, 1.8, edgecolor='#0f172a', facecolor='#f1f5f9', linewidth=2)
+    # External Entity: Student / Candidate (Left)
+    user_box = patches.Rectangle((0.4, 2.7), 1.8, 1.6, edgecolor='#000000', facecolor='#ffffff', linewidth=1.5)
     ax.add_patch(user_box)
-    ax.text(1.3, 4.1, 'Student /\nCandidate', ha='center', va='center', fontweight='bold', fontsize=9.5)
+    ax.text(1.3, 3.5, 'Student /\nCandidate', ha='center', va='center', fontweight='bold', fontsize=9.5)
 
-    # Processes
+    # Five Functional Processes (Circles)
     procs = [
-        ('1.0\nProfile &\nResume Parser', (3.5, 6.2)),
-        ('2.0\nJob Compatibility\nEngine', (6.5, 6.2)),
-        ('3.0\nLearning Roadmap\nGenerator', (9.2, 4.3)),
-        ('4.0\nInterview Readiness\nSimulator', (6.5, 2.2)),
-        ('5.0\nApplication\nPipeline Tracker', (3.5, 2.2)),
+        ('1.0\nProfile &\nRésumé Parser', (3.5, 5.5)),
+        ('2.0\nJob Compatibility\nEngine', (6.5, 5.5)),
+        ('3.0\nLearning Roadmap\nGenerator', (9.0, 3.7)),
+        ('4.0\nInterview Readiness\nSimulator', (6.5, 1.8)),
+        ('5.0\nApplication\nPipeline Tracker', (3.5, 1.8)),
     ]
 
     for label, (x, y) in procs:
-        circle = patches.Circle((x, y), 0.9, edgecolor='#1d4ed8', facecolor='#eff6ff', linewidth=1.8)
+        circle = patches.Circle((x, y), 0.85, edgecolor='#000000', facecolor='#ffffff', linewidth=1.4)
         ax.add_patch(circle)
-        ax.text(x, y, label, ha='center', va='center', fontsize=8, fontweight='bold', color='#1e3a8a')
+        ax.text(x, y, label, ha='center', va='center', fontsize=8.2, fontweight='bold')
 
-    # Data Stores
-    stores = [
-        ('D1: Profiles & Resumes Store', 5.0, 7.5),
-        ('D2: Analyses & Match Scores Store', 8.2, 7.5),
-        ('D3: Learning Roadmaps Store', 9.2, 2.2),
-        ('D4: Interview Questions & Drills', 6.5, 0.7),
-        ('D5: Job Applications Store', 3.5, 0.7),
-    ]
+    # Data Stores (Open-ended horizontal bars)
+    def draw_store(name, x, y, w=2.4, h=0.45):
+        # Open ended rectangle (top and bottom lines, left vertical line)
+        ax.plot([x, x+w], [y+h/2, y+h/2], color='#000000', lw=1.2)
+        ax.plot([x, x+w], [y-h/2, y-h/2], color='#000000', lw=1.2)
+        ax.plot([x, x], [y-h/2, y+h/2], color='#000000', lw=1.2)
+        ax.text(x + w/2, y, name, ha='center', va='center', fontsize=7.5, fontweight='bold')
 
-    for label, x, y in stores:
-        line1 = patches.Rectangle((x-1.5, y-0.25), 3.0, 0.5, edgecolor='#475569', facecolor='#ffffff', linewidth=1.2)
-        ax.add_patch(line1)
-        ax.plot([x-1.5, x+1.5], [y-0.25, y-0.25], color='#475569', lw=1.5)
-        ax.plot([x-1.5, x+1.5], [y+0.25, y+0.25], color='#475569', lw=1.5)
-        ax.text(x, y, label, ha='center', va='center', fontsize=7.5, fontweight='bold', color='#334155')
+    draw_store('D1: Profiles & Résumés Store', 4.0, 6.7)
+    draw_store('D2: Compatibility Analyses Store', 7.5, 6.7)
+    draw_store('D3: Learning Roadmaps Store', 7.8, 2.7)
+    draw_store('D4: Interview Questions & Drills', 5.3, 0.5)
+    draw_store('D5: Job Applications Store', 2.3, 0.5)
 
-    # Connections / Data Flows
-    ax.annotate('', xy=(2.6, 6.2), xytext=(1.8, 4.8), arrowprops=dict(arrowstyle="->", color="#2563eb", lw=1.4))
-    ax.text(1.8, 5.8, 'Resume Text', fontsize=7, color='#1e293b')
-
-    ax.annotate('', xy=(5.6, 6.2), xytext=(4.4, 6.2), arrowprops=dict(arrowstyle="->", color="#2563eb", lw=1.4))
-    ax.text(5.0, 6.35, 'Verified Skills', ha='center', fontsize=7, color='#1e293b')
-
-    ax.annotate('', xy=(8.3, 4.5), xytext=(7.3, 5.8), arrowprops=dict(arrowstyle="->", color="#2563eb", lw=1.4))
-    ax.text(8.1, 5.3, 'Missing Gaps', fontsize=7, color='#1e293b')
-
-    ax.annotate('', xy=(6.5, 3.1), xytext=(6.5, 5.3), arrowprops=dict(arrowstyle="->", color="#2563eb", lw=1.4))
-    ax.text(6.6, 4.2, 'Target Role', fontsize=7, color='#1e293b')
-
-    ax.annotate('', xy=(3.5, 3.1), xytext=(5.7, 5.6), arrowprops=dict(arrowstyle="->", color="#2563eb", lw=1.4))
-    ax.text(4.2, 4.5, 'Job Details', fontsize=7, color='#1e293b')
-
-    ax.annotate('', xy=(1.8, 3.4), xytext=(2.6, 2.4), arrowprops=dict(arrowstyle="->", color="#059669", lw=1.4))
-    ax.text(1.7, 2.7, 'Status Reports', fontsize=7, color='#065f46')
-
-    # Flows to Data Stores
-    ax.annotate('', xy=(4.2, 7.3), xytext=(3.8, 7.0), arrowprops=dict(arrowstyle="->", color="#64748b", lw=1.2, ls='--'))
-    ax.annotate('', xy=(7.5, 7.3), xytext=(6.9, 7.0), arrowprops=dict(arrowstyle="->", color="#64748b", lw=1.2, ls='--'))
-    ax.annotate('', xy=(9.2, 2.5), xytext=(9.2, 3.4), arrowprops=dict(arrowstyle="->", color="#64748b", lw=1.2, ls='--'))
-    ax.annotate('', xy=(6.5, 1.0), xytext=(6.5, 1.3), arrowprops=dict(arrowstyle="->", color="#64748b", lw=1.2, ls='--'))
-    ax.annotate('', xy=(3.5, 1.0), xytext=(3.5, 1.3), arrowprops=dict(arrowstyle="->", color="#64748b", lw=1.2, ls='--'))
-
-    ax.set_title('Figure 6.2: Data Flow Diagram (DFD) Level 1 — Functional Decomposition Diagram', fontsize=12, fontweight='bold', pad=15)
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_2_dfd_level_1.png'), bbox_inches='tight')
-    plt.close()
-
-# -------------------------------------------------------------
-# 3. Use-Case Diagram
-# -------------------------------------------------------------
-def create_use_case_diagram():
-    fig, ax = plt.subplots(figsize=(10, 8), dpi=300)
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 10)
-    ax.axis('off')
-
-    # System boundary box
-    sys_box = patches.Rectangle((3.0, 0.5), 6.5, 9.0, edgecolor='#1e3a8a', facecolor='#f8fafc', linewidth=2)
-    ax.add_patch(sys_box)
-    ax.text(6.25, 9.2, 'CareerLens AI System Boundary', ha='center', fontsize=11, fontweight='bold', color='#1e3a8a')
-
-    # Actor: Student / Candidate
-    ax.plot([1.2, 1.2], [5.0, 5.8], color='#0f172a', lw=2)  # Body
-    head = patches.Circle((1.2, 6.2), 0.35, edgecolor='#0f172a', facecolor='#ffffff', lw=2)
-    ax.add_patch(head)
-    ax.plot([0.7, 1.7], [5.5, 5.5], color='#0f172a', lw=2)  # Arms
-    ax.plot([1.2, 0.8], [5.0, 4.2], color='#0f172a', lw=2)  # Left leg
-    ax.plot([1.2, 1.6], [5.0, 4.2], color='#0f172a', lw=2)  # Right leg
-    ax.text(1.2, 3.8, 'Student /\nJob Candidate', ha='center', fontsize=9.5, fontweight='bold', color='#0f172a')
-
-    # Use Cases
-    use_cases = [
-        (6.25, 8.4, 'Register / Authenticate Account'),
-        (6.25, 7.3, 'Upload Résumé & Audit Skills'),
-        (6.25, 6.2, 'Paste Job Posting & Run Compatibility Analysis'),
-        (6.25, 5.1, 'Review Segmented Match & Mathematical Breakdown'),
-        (6.25, 4.0, 'Generate & Track Prioritized Learning Roadmaps'),
-        (6.25, 2.9, 'Practise Role Questions & Review Rubric Feedback'),
-        (6.25, 1.8, 'Manage Job Pipeline (CRUD Application Tracker)'),
-        (6.25, 0.9, 'Export Career Data (JSON) & Reset Workspace')
-    ]
-
-    for x, y, text in use_cases:
-        ellipse = patches.Ellipse((x, y), 5.2, 0.75, edgecolor='#2563eb', facecolor='#eff6ff', linewidth=1.5)
-        ax.add_patch(ellipse)
-        ax.text(x, y, text, ha='center', va='center', fontsize=8.5, fontweight='semibold', color='#0f172a')
-        # Actor connection line
-        ax.plot([1.6, x - 2.6], [5.4, y], color='#64748b', lw=1.1, ls='-')
-
-    ax.set_title('Figure 6.3: UML Use-Case Diagram for CareerLens AI', fontsize=12, fontweight='bold', pad=15)
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_3_use_case.png'), bbox_inches='tight')
-    plt.close()
-
-# -------------------------------------------------------------
-# 4. Activity Diagram
-# -------------------------------------------------------------
-def create_activity_diagram():
-    fig, ax = plt.subplots(figsize=(8, 10), dpi=300)
-    ax.set_xlim(0, 8)
-    ax.set_ylim(0, 11)
-    ax.axis('off')
-
-    # Start Node
-    start = patches.Circle((4, 10.3), 0.22, facecolor='#0f172a', edgecolor='#0f172a')
-    ax.add_patch(start)
-
-    # Activity Nodes
-    nodes = [
-        (4, 9.4, 'Candidate enters profile skills or uploads résumé text', 4.8, 0.6),
-        (4, 8.3, 'Token-boundary engine detects canonical skills & aliases', 5.0, 0.6),
-        (4, 7.2, 'Candidate pastes target Job Description (JD)', 4.5, 0.6),
-        (4, 6.0, 'Is technical competency found in JD?', 3.6, 0.7, True), # Decision Diamond
-        (6.5, 6.0, 'Trigger Zero-Denominator Guard\nPrompt user for qualifications', 2.6, 0.7),
-        (4, 4.7, 'Segment into Required (70%) vs Preferred (30%) competencies', 5.2, 0.6),
-        (4, 3.6, 'Calculate deterministic match score & formula explanation', 5.0, 0.6),
-        (4, 2.5, 'Automatically populate prioritized learning roadmap for gaps', 5.2, 0.6),
-        (4, 1.4, 'Prepare role-based interview drills & track application pipeline', 5.2, 0.6),
-    ]
-
-    for item in nodes:
-        if len(item) == 6:
-            x, y, text, w, h, is_diamond = item
-            diamond = patches.Polygon([[x, y+h/2], [x+w/2, y], [x, y-h/2], [x-w/2, y]],
-                                      closed=True, edgecolor='#d97706', facecolor='#fef3c7', lw=1.8)
-            ax.add_patch(diamond)
-            ax.text(x, y, text, ha='center', va='center', fontsize=7.5, fontweight='bold', color='#92400e')
-        else:
-            x, y, text, w, h = item
-            box = patches.FancyBboxPatch((x-w/2, y-h/2), w, h, boxstyle="round,pad=0.1",
-                                         edgecolor='#2563eb', facecolor='#f8fafc', lw=1.5)
-            ax.add_patch(box)
-            ax.text(x, y, text, ha='center', va='center', fontsize=8, fontweight='semibold', color='#0f172a')
-
-    # End Node
-    end_outer = patches.Circle((4, 0.4), 0.25, edgecolor='#0f172a', facecolor='none', lw=1.8)
-    end_inner = patches.Circle((4, 0.4), 0.16, facecolor='#0f172a', edgecolor='#0f172a')
-    ax.add_patch(end_outer)
-    ax.add_patch(end_inner)
-
-    # Connecting Arrows
+    # Connectors & Data Flows (black arrows)
     arrows = [
-        ((4, 10.08), (4, 9.7)),
-        ((4, 9.1), (4, 8.6)),
-        ((4, 8.0), (4, 7.5)),
-        ((4, 6.9), (4, 6.35)),
-        ((4, 5.65), (4, 5.0)),   # Yes
-        ((4, 4.4), (4, 3.9)),
-        ((4, 3.3), (4, 2.8)),
-        ((4, 2.2), (4, 1.7)),
-        ((4, 1.1), (4, 0.65)),
+        # User to 1.0
+        ((1.3, 4.3), (2.8, 5.2), 'Résumé / Skills'),
+        # 1.0 to 2.0
+        ((4.35, 5.5), (5.65, 5.5), 'Verified Skills'),
+        # User to 2.0
+        ((2.2, 3.7), (5.7, 5.2), 'Job Description Text'),
+        # 2.0 to 3.0
+        ((7.3, 5.2), (8.4, 4.2), 'Skill Gaps'),
+        # 2.0 to 4.0
+        ((6.5, 4.65), (6.5, 2.65), 'Target Role'),
+        # User to 5.0
+        ((2.2, 3.2), (2.8, 2.1), 'New Application'),
+        # 1.0 to D1
+        ((3.9, 6.3), (4.5, 6.5), ''),
+        # 2.0 to D2
+        ((7.0, 6.3), (8.0, 6.5), ''),
+        # 3.0 to D3
+        ((9.0, 2.85), (9.0, 2.95), ''),
+        # 4.0 to D4
+        ((6.5, 0.95), (6.5, 0.75), ''),
+        # 5.0 to D5
+        ((3.5, 0.95), (3.5, 0.75), ''),
     ]
 
-    for start_pt, end_pt in arrows:
-        ax.annotate('', xy=end_pt, xytext=start_pt, arrowprops=dict(arrowstyle="->", color="#0f172a", lw=1.4))
+    for start, end, label in arrows:
+        ax.annotate('', xy=end, xytext=start,
+                    arrowprops=dict(arrowstyle="->", color="#000000", lw=1.1))
+        if label:
+            mx = (start[0] + end[0]) / 2
+            my = (start[1] + end[1]) / 2 + 0.15
+            ax.text(mx, my, label, ha='center', va='bottom', fontsize=7, backgroundcolor='#ffffff')
 
-    # Decision branches
-    ax.text(4.15, 5.25, 'Yes', fontsize=8, fontweight='bold', color='#059669')
-    # No branch to Guard
-    ax.annotate('', xy=(5.2, 6.0), xytext=(5.8, 6.0), arrowprops=dict(arrowstyle="<-", color="#dc2626", lw=1.4))
-    ax.text(5.5, 6.15, 'No (0 skills)', fontsize=7.5, fontweight='bold', color='#dc2626')
-    # Loop back from guard to paste JD
-    ax.plot([6.5, 6.5, 4.0], [6.35, 7.2, 7.2], color='#dc2626', lw=1.2, ls='--')
-
-    ax.set_title('Figure 6.4: UML Activity Diagram — End-to-End Workflow', fontsize=12, fontweight='bold', pad=15)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_4_activity.png'), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_2_dfd_level_1.png'), bbox_inches='tight', facecolor='#ffffff')
     plt.close()
 
 # -------------------------------------------------------------
-# 5. System Architecture Diagram
+# 3. UML Use-Case Diagram
 # -------------------------------------------------------------
-def create_architecture_diagram():
-    fig, ax = plt.subplots(figsize=(10, 8), dpi=300)
+def create_use_case():
+    fig, ax = plt.subplots(figsize=(8.5, 7.5), dpi=300)
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 9)
     ax.axis('off')
 
-    # Layer 1: Client Presentation Layer
-    l1 = patches.FancyBboxPatch((0.5, 6.4), 9.0, 2.1, boxstyle="round,pad=0.15", edgecolor='#1e40af', facecolor='#eff6ff', lw=2)
-    ax.add_patch(l1)
-    ax.text(5.0, 8.2, 'PRESENTATION LAYER (Next.js 14 App Router & React 18)', ha='center', fontsize=10.5, fontweight='bold', color='#1e40af')
-    
-    modules = ['Landing (/)', 'Dashboard', 'Job Analysis', 'Learning Plan', 'Interview Prep', 'Job Tracker', 'Analytics', 'Settings']
-    for idx, mod in enumerate(modules):
-        x = 1.0 + (idx % 4) * 2.15
-        y = 7.5 if idx < 4 else 6.7
-        box = patches.Rectangle((x, y-0.25), 1.9, 0.5, edgecolor='#3b82f6', facecolor='#ffffff', lw=1.2)
-        ax.add_patch(box)
-        ax.text(x+0.95, y, mod, ha='center', va='center', fontsize=8, fontweight='semibold', color='#1e293b')
+    # System boundary box
+    sys_box = patches.Rectangle((3.2, 0.4), 6.4, 8.2, edgecolor='#000000', facecolor='#ffffff', linewidth=1.5)
+    ax.add_patch(sys_box)
+    ax.text(6.4, 8.35, 'CareerLens AI System Boundary', ha='center', va='center', fontsize=10.5, fontweight='bold')
 
-    # Layer 2: Business Logic & Route Handlers Layer
-    l2 = patches.FancyBboxPatch((0.5, 3.4), 9.0, 2.4, boxstyle="round,pad=0.15", edgecolor='#047857', facecolor='#ecfdf5', lw=2)
-    ax.add_patch(l2)
-    ax.text(5.0, 5.5, 'BUSINESS LOGIC & APPLICATION ENGINE (Serverless API & Client Context)', ha='center', fontsize=10.5, fontweight='bold', color='#047857')
+    # Actor: Student / Candidate (Stick Figure)
+    # Head
+    head = patches.Circle((1.5, 5.0), 0.35, edgecolor='#000000', facecolor='#ffffff', linewidth=1.5)
+    ax.add_patch(head)
+    # Body
+    ax.plot([1.5, 1.5], [4.65, 3.6], color='#000000', lw=1.5)
+    # Arms
+    ax.plot([1.0, 2.0], [4.2, 4.2], color='#000000', lw=1.5)
+    # Legs
+    ax.plot([1.5, 1.1], [3.6, 2.7], color='#000000', lw=1.5)
+    ax.plot([1.5, 1.9], [3.6, 2.7], color='#000000', lw=1.5)
+    # Label
+    ax.text(1.5, 2.3, 'Student /\nJob Candidate', ha='center', va='top', fontsize=9.5, fontweight='bold')
 
-    submodules = [
-        ('Deterministic Skill Parser\n(Regex Token Boundary)', 1.8, 4.3),
-        ('Job Segmenter\n(Required 70% vs Preferred 30%)', 4.0, 4.3),
-        ('Zero-Denominator Guard\n(Safety Verification)', 6.2, 4.3),
-        ('Interview Rubric Evaluator\n(Keypoint Matcher)', 8.2, 4.3),
-        ('POST /api/analyze', 1.8, 3.6),
-        ('POST /api/learning-plan', 4.0, 3.6),
-        ('GET/POST /api/interview', 6.2, 3.6),
-        ('POST /api/applications', 8.2, 3.6),
+    # Use Cases (Ovals)
+    use_cases = [
+        ('Manage Profile Skills & Upload Résumé', 7.5),
+        ('Paste Job Posting & Run Compatibility Analysis', 6.5),
+        ('Review Segmented Match & Formula Breakdown', 5.5),
+        ('Generate & Track Prioritized Learning Roadmaps', 4.5),
+        ('Add Custom Learning Milestones & Goals', 3.5),
+        ('Practise Role Questions & Review Rubric Feedback', 2.5),
+        ('Track Applications & Manage Pipeline Stages', 1.5),
+        ('Export Offline Career Data Archive (JSON)', 0.7),
     ]
-    for text, x, y in submodules:
-        b = patches.Rectangle((x-0.95, y-0.25), 1.9, 0.5, edgecolor='#10b981', facecolor='#ffffff', lw=1)
-        ax.add_patch(b)
-        ax.text(x, y, text, ha='center', va='center', fontsize=7, fontweight='semibold', color='#064e3b')
 
-    # Layer 3: Data & Persistence Layer (Dual-Mode)
-    l3 = patches.FancyBboxPatch((0.5, 0.5), 9.0, 2.2, boxstyle="round,pad=0.15", edgecolor='#b45309', facecolor='#fffbeb', lw=2)
-    ax.add_patch(l3)
-    ax.text(5.0, 2.4, 'DUAL-ENGINE DATA PERSISTENCE LAYER', ha='center', fontsize=10.5, fontweight='bold', color='#b45309')
+    actor_point = (1.5, 4.2)
 
-    # Engine A: LocalStorage Fallback (Active)
-    b_local = patches.Rectangle((1.0, 0.8), 3.8, 1.3, edgecolor='#f59e0b', facecolor='#ffffff', lw=1.5)
-    ax.add_patch(b_local)
-    ax.text(2.9, 1.7, 'Engine A: Client-Side LocalStorage (Active)', ha='center', fontsize=8.5, fontweight='bold', color='#92400e')
-    ax.text(2.9, 1.2, '• 100% Privacy & Zero API Dependency\n• Encrypted Browser Cache Persistence\n• Complete Offline Portability (JSON Export)', ha='center', fontsize=7.5, color='#78350f')
+    for text, y in use_cases:
+        ellipse = patches.Ellipse((6.4, y), 5.4, 0.65, edgecolor='#000000', facecolor='#ffffff', linewidth=1.2)
+        ax.add_patch(ellipse)
+        ax.text(6.4, y, text, ha='center', va='center', fontsize=8.2)
+        # Connection line
+        ax.plot([actor_point[0], 3.7], [actor_point[1], y], color='#000000', lw=0.9, linestyle='-')
 
-    # Engine B: Supabase Cloud (Configured)
-    b_cloud = patches.Rectangle((5.2, 0.8), 3.8, 1.3, edgecolor='#f59e0b', facecolor='#ffffff', lw=1.5)
-    ax.add_patch(b_cloud)
-    ax.text(7.1, 1.7, 'Engine B: Supabase Cloud PostgreSQL (Ready)', ha='center', fontsize=8.5, fontweight='bold', color='#92400e')
-    ax.text(7.1, 1.2, '• PostgreSQL with Row-Level Security (RLS)\n• Supabase Auth & JWT Sessions\n• Private Resume Cloud Storage', ha='center', fontsize=7.5, color='#78350f')
-
-    # Connecting Arrows between layers
-    ax.annotate('', xy=(5.0, 5.8), xytext=(5.0, 6.4), arrowprops=dict(arrowstyle="<->", color="#1e3a8a", lw=2))
-    ax.annotate('', xy=(5.0, 2.7), xytext=(5.0, 3.4), arrowprops=dict(arrowstyle="<->", color="#047857", lw=2))
-
-    ax.set_title('Figure 6.5: System Architecture Diagram — 3-Tier Dual-Engine Design', fontsize=12, fontweight='bold', pad=15)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_5_architecture.png'), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_3_use_case.png'), bbox_inches='tight', facecolor='#ffffff')
     plt.close()
 
 # -------------------------------------------------------------
-# 6. ER Diagram (Data Model)
+# 4. UML Activity Diagram
 # -------------------------------------------------------------
-def create_er_diagram():
-    fig, ax = plt.subplots(figsize=(11, 7.5), dpi=300)
-    ax.set_xlim(0, 11)
-    ax.set_ylim(0, 8)
+def create_activity():
+    fig, ax = plt.subplots(figsize=(7.5, 9.0), dpi=300)
+    ax.set_xlim(0, 8)
+    ax.set_ylim(0, 10.5)
     ax.axis('off')
 
-    entities = [
-        # (name, x, y, fields)
-        ('PROFILES', 1.8, 5.8, ['id (PK, UUID)', 'email (VARCHAR)', 'full_name (TEXT)', 'skills (TEXT[])', 'target_role (TEXT)', 'created_at (TIMESTAMP)']),
-        ('RESUMES', 1.8, 2.2, ['id (PK, UUID)', 'user_id (FK)', 'file_name (TEXT)', 'extracted_text (TEXT)', 'detected_skills (TEXT[])', 'created_at (TIMESTAMP)']),
-        ('JOB_ANALYSES', 5.5, 5.8, ['id (PK, UUID)', 'user_id (FK)', 'job_title (TEXT)', 'company_name (TEXT)', 'matched_skills (TEXT[])', 'missing_skills (TEXT[])', 'match_percentage (FLOAT)']),
-        ('LEARNING_PLANS', 9.2, 5.8, ['id (PK, UUID)', 'user_id (FK)', 'skill_name (TEXT)', 'priority (TEXT)', 'timeframe (TEXT)', 'completed (BOOLEAN)', 'resources (JSONB)']),
-        ('JOB_APPLICATIONS', 5.5, 2.2, ['id (PK, UUID)', 'user_id (FK)', 'company (TEXT)', 'role (TEXT)', 'status (TEXT)', 'salary_range (TEXT)', 'date_applied (DATE)']),
-        ('INTERVIEW_SESSIONS', 9.2, 2.2, ['id (PK, UUID)', 'user_id (FK)', 'question_id (TEXT)', 'user_answer (TEXT)', 'coverage_pct (INT)', 'feedback (TEXT)', 'created_at (TIMESTAMP)'])
+    # Initial state (solid black circle)
+    start = patches.Circle((4, 9.8), 0.22, edgecolor='#000000', facecolor='#000000')
+    ax.add_patch(start)
+
+    # Activity nodes (rounded rectangles)
+    activities = [
+        ('Enter verified skills or upload résumé text', 8.8),
+        ('Extract canonical technical competencies via regex', 7.7),
+        ('Paste target job description text', 6.6),
     ]
 
-    for name, x, y, fields in entities:
-        w, h = 2.4, 2.2
-        box = patches.Rectangle((x-w/2, y-h/2), w, h, edgecolor='#1e3a8a', facecolor='#ffffff', lw=1.8)
+    for text, y in activities:
+        box = patches.FancyBboxPatch((1.6, y-0.35), 4.8, 0.7, boxstyle="round,pad=0.1",
+                                     edgecolor='#000000', facecolor='#ffffff', linewidth=1.2)
+        ax.add_patch(box)
+        ax.text(4, y, text, ha='center', va='center', fontsize=8.5)
+
+    # Connecting arrows
+    ax.annotate('', xy=(4, 9.15), xytext=(4, 9.58), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+    ax.annotate('', xy=(4, 8.05), xytext=(4, 8.45), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+    ax.annotate('', xy=(4, 6.95), xytext=(4, 7.35), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+
+    # Decision Diamond
+    diamond_y = 5.4
+    diamond = patches.Polygon([[4, diamond_y+0.5], [5.8, diamond_y], [4, diamond_y-0.5], [2.2, diamond_y]],
+                              closed=True, edgecolor='#000000', facecolor='#ffffff', linewidth=1.2)
+    ax.add_patch(diamond)
+    ax.text(4, diamond_y, 'Are technical\nskills found in JD?', ha='center', va='center', fontsize=7.5, fontweight='bold')
+    ax.annotate('', xy=(4, diamond_y+0.5), xytext=(4, 6.25), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+
+    # Guard Branch: No (Zero-Denominator Guard)
+    guard_box = patches.FancyBboxPatch((5.4, 4.0), 2.3, 0.7, boxstyle="round,pad=0.08",
+                                       edgecolor='#000000', facecolor='#ffffff', linewidth=1.2)
+    ax.add_patch(guard_box)
+    ax.text(6.55, 4.35, 'Trigger Zero-Denominator Guard:\nPrompt user for qualifications', ha='center', va='center', fontsize=7)
+    # Arrow to guard
+    ax.plot([5.8, 6.55, 6.55], [diamond_y, diamond_y, 4.7], color='#000000', lw=1.1)
+    ax.annotate('', xy=(6.55, 4.7), xytext=(6.55, 4.8), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.1))
+    ax.text(6.0, diamond_y + 0.15, '[No / 0 skills]', fontsize=7.2, fontweight='bold')
+    # Loop back to input
+    ax.plot([6.55, 6.55, 6.4, 6.4], [4.0, 3.5, 3.5, 6.6], color='#000000', lw=1.1, linestyle='--')
+    ax.annotate('', xy=(6.4, 6.6), xytext=(6.55, 3.5), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.1, linestyle='--'))
+
+    # Guard Branch: Yes
+    ax.text(4.1, 4.7, '[Yes]', fontsize=7.5, fontweight='bold')
+
+    lower_activities = [
+        ('Segment qualifications into Required (70%) vs Preferred (30%)', 3.8),
+        ('Calculate deterministic match percentage & formula breakdown', 2.7),
+        ('Generate prioritized learning roadmaps for missing gaps', 1.6),
+    ]
+
+    for text, y in lower_activities:
+        box = patches.FancyBboxPatch((1.6, y-0.35), 4.8, 0.7, boxstyle="round,pad=0.1",
+                                     edgecolor='#000000', facecolor='#ffffff', linewidth=1.2)
+        ax.add_patch(box)
+        ax.text(4, y, text, ha='center', va='center', fontsize=8.3)
+
+    ax.annotate('', xy=(4, 4.15), xytext=(4, diamond_y-0.5), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+    ax.annotate('', xy=(4, 3.05), xytext=(4, 3.45), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+    ax.annotate('', xy=(4, 1.95), xytext=(4, 2.35), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+
+    # Final State (Bullseye)
+    end_outer = patches.Circle((4, 0.6), 0.28, edgecolor='#000000', facecolor='#ffffff', linewidth=1.5)
+    end_inner = patches.Circle((4, 0.6), 0.16, edgecolor='#000000', facecolor='#000000')
+    ax.add_patch(end_outer)
+    ax.add_patch(end_inner)
+    ax.annotate('', xy=(4, 0.88), xytext=(4, 1.25), arrowprops=dict(arrowstyle="->", color="#000000", lw=1.2))
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_4_activity.png'), bbox_inches='tight', facecolor='#ffffff')
+    plt.close()
+
+# -------------------------------------------------------------
+# 5. System Architecture (3-Tier Dual-Engine)
+# -------------------------------------------------------------
+def create_architecture():
+    fig, ax = plt.subplots(figsize=(9.5, 6.8), dpi=300)
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 7.5)
+    ax.axis('off')
+
+    # Tier 1: Presentation Layer
+    tier1_box = patches.Rectangle((0.5, 5.2), 9.0, 1.9, edgecolor='#000000', facecolor='#ffffff', linewidth=1.4)
+    ax.add_patch(tier1_box)
+    ax.text(5.0, 6.85, 'PRESENTATION TIER (Next.js 14 App Router & React)', ha='center', va='center', fontsize=9.5, fontweight='bold')
+
+    t1_components = [
+        ('Landing Page', 1.4), ('Dashboard', 3.2), ('Job Analysis', 5.0),
+        ('Learning Plan', 6.8), ('Interview Prep', 8.6),
+    ]
+    for name, x in t1_components:
+        b = patches.Rectangle((x-0.8, 5.4), 1.6, 0.8, edgecolor='#000000', facecolor='#ffffff', linewidth=1.0)
+        ax.add_patch(b)
+        ax.text(x, 5.8, name, ha='center', va='center', fontsize=7.5)
+
+    # Connector Tier 1 <-> Tier 2
+    ax.annotate('', xy=(5.0, 4.8), xytext=(5.0, 5.2), arrowprops=dict(arrowstyle="<->", color="#000000", lw=1.4))
+
+    # Tier 2: Business Logic & Application Engine
+    tier2_box = patches.Rectangle((0.5, 2.7), 9.0, 2.1, edgecolor='#000000', facecolor='#ffffff', linewidth=1.4)
+    ax.add_patch(tier2_box)
+    ax.text(5.0, 4.55, 'BUSINESS LOGIC & APPLICATION ENGINE (Serverless API & Client Context)', ha='center', va='center', fontsize=9.5, fontweight='bold')
+
+    t2_engines = [
+        ('Deterministic Skill Parser\n(Regex Token Boundary)', 1.7),
+        ('Segmented Scorer\n(70% Req / 30% Pref)', 3.9),
+        ('Zero-Denominator Guard\n(Safety Verification)', 6.1),
+        ('Interview Rubric Evaluator\n(Keypoint Matcher)', 8.3),
+    ]
+    for name, x in t2_engines:
+        b = patches.Rectangle((x-0.95, 3.4), 1.9, 0.85, edgecolor='#000000', facecolor='#ffffff', linewidth=1.0)
+        ax.add_patch(b)
+        ax.text(x, 3.82, name, ha='center', va='center', fontsize=7.0)
+
+    # API Endpoints Bar
+    ax.plot([0.8, 9.2], [3.2, 3.2], color='#000000', lw=0.8, linestyle=':')
+    ax.text(5.0, 2.95, 'Next.js Route Handlers: POST /api/analyze  |  POST /api/learning-plan  |  POST /api/interview  |  POST /api/applications',
+            ha='center', va='center', fontsize=7.2)
+
+    # Connector Tier 2 <-> Tier 3
+    ax.annotate('', xy=(5.0, 2.3), xytext=(5.0, 2.7), arrowprops=dict(arrowstyle="<->", color="#000000", lw=1.4))
+
+    # Tier 3: Dual-Engine Data Persistence
+    tier3_box = patches.Rectangle((0.5, 0.4), 9.0, 1.9, edgecolor='#000000', facecolor='#ffffff', linewidth=1.4)
+    ax.add_patch(tier3_box)
+    ax.text(5.0, 2.05, 'DUAL-ENGINE DATA PERSISTENCE LAYER', ha='center', va='center', fontsize=9.5, fontweight='bold')
+
+    # Engine A: LocalStorage
+    eng_a = patches.Rectangle((0.8, 0.6), 4.0, 1.2, edgecolor='#000000', facecolor='#ffffff', linewidth=1.0)
+    ax.add_patch(eng_a)
+    ax.text(2.8, 1.55, 'Engine A: Client-Side LocalStorage (Active)', ha='center', va='center', fontsize=8.0, fontweight='bold')
+    ax.text(2.8, 1.05, '• 100% Privacy & Zero API Dependency\n• Encrypted Browser Cache Persistence\n• Complete Offline Portability (JSON Export)',
+            ha='center', va='center', fontsize=7.0)
+
+    # Engine B: Supabase PostgreSQL
+    eng_b = patches.Rectangle((5.2, 0.6), 4.0, 1.2, edgecolor='#000000', facecolor='#ffffff', linewidth=1.0)
+    ax.add_patch(eng_b)
+    ax.text(7.2, 1.55, 'Engine B: Supabase Cloud PostgreSQL (Ready)', ha='center', va='center', fontsize=8.0, fontweight='bold')
+    ax.text(7.2, 1.05, '• PostgreSQL with Row-Level Security (RLS)\n• Supabase Auth & JWT Sessions\n• Private Résumé Cloud Storage',
+            ha='center', va='center', fontsize=7.0)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_5_architecture.png'), bbox_inches='tight', facecolor='#ffffff')
+    plt.close()
+
+# -------------------------------------------------------------
+# 6. Entity-Relationship (ER) Diagram
+# -------------------------------------------------------------
+def create_er_diagram():
+    fig, ax = plt.subplots(figsize=(10, 6.8), dpi=300)
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 7.5)
+    ax.axis('off')
+
+    def draw_entity(title, attributes, x, y, w=2.4, h=1.8):
+        # Outer box
+        box = patches.Rectangle((x, y), w, h, edgecolor='#000000', facecolor='#ffffff', linewidth=1.2)
         ax.add_patch(box)
         # Header box
-        hdr = patches.Rectangle((x-w/2, y+h/2-0.45), w, 0.45, edgecolor='#1e3a8a', facecolor='#1e3a8a', lw=1.8)
-        ax.add_patch(hdr)
-        ax.text(x, y+h/2-0.23, name, ha='center', va='center', fontsize=8.5, fontweight='bold', color='#ffffff')
-        
-        # Fields
-        for idx, fld in enumerate(fields):
-            ax.text(x-w/2+0.1, y+h/2-0.75-(idx*0.27), fld, ha='left', va='center', fontsize=7.2, color='#1e293b')
+        header = patches.Rectangle((x, y + h - 0.4), w, 0.4, edgecolor='#000000', facecolor='#ffffff', linewidth=1.2)
+        ax.add_patch(header)
+        ax.text(x + w/2, y + h - 0.2, title, ha='center', va='center', fontsize=8.5, fontweight='bold')
+        # Attributes
+        attr_text = '\n'.join(attributes)
+        ax.text(x + 0.12, y + h - 0.55, attr_text, ha='left', va='top', fontsize=7.0)
 
-    # Relationships Lines
-    # Profiles -> Resumes (1 : N)
-    ax.plot([1.8, 1.8], [4.7, 3.3], color='#2563eb', lw=1.8)
-    ax.text(1.9, 4.0, '1 : N', fontsize=8, fontweight='bold', color='#1d4ed8')
+    # Tables
+    draw_entity('PROFILES', [
+        'id (PK, UUID)',
+        'email (VARCHAR)',
+        'full_name (TEXT)',
+        'skills (TEXT[])',
+        'target_role (TEXT)',
+        'created_at (TIMESTAMP)'
+    ], 0.5, 4.8)
 
-    # Profiles -> Job_Analyses (1 : N)
-    ax.plot([3.0, 4.3], [5.8, 5.8], color='#2563eb', lw=1.8)
-    ax.text(3.65, 6.0, '1 : N', fontsize=8, fontweight='bold', color='#1d4ed8')
+    draw_entity('JOB_ANALYSES', [
+        'id (PK, UUID)',
+        'user_id (FK, UUID)',
+        'job_title (TEXT)',
+        'company_name (TEXT)',
+        'matched_skills (TEXT[])',
+        'missing_skills (TEXT[])',
+        'match_percentage (FLOAT)'
+    ], 3.8, 4.8)
 
-    # Job_Analyses -> Learning_Plans (1 : N)
-    ax.plot([6.7, 8.0], [5.8, 5.8], color='#2563eb', lw=1.8)
-    ax.text(7.35, 6.0, '1 : N', fontsize=8, fontweight='bold', color='#1d4ed8')
+    draw_entity('LEARNING_PLANS', [
+        'id (PK, UUID)',
+        'user_id (FK, UUID)',
+        'skill_name (TEXT)',
+        'priority (TEXT)',
+        'timeframe (TEXT)',
+        'completed (BOOLEAN)',
+        'resources (JSONB)'
+    ], 7.1, 4.8)
 
-    # Profiles -> Job_Applications (1 : N)
-    ax.plot([3.0, 4.3], [5.0, 2.8], color='#2563eb', lw=1.8)
-    ax.text(3.3, 3.8, '1 : N', fontsize=8, fontweight='bold', color='#1d4ed8')
+    draw_entity('RESUMES', [
+        'id (PK, UUID)',
+        'user_id (FK, UUID)',
+        'file_name (TEXT)',
+        'extracted_text (TEXT)',
+        'detected_skills (TEXT[])',
+        'created_at (TIMESTAMP)'
+    ], 0.5, 1.5)
 
-    # Profiles -> Interview_Sessions (1 : N)
-    ax.plot([6.7, 8.0], [2.2, 2.2], color='#2563eb', lw=1.8)
-    ax.text(7.35, 2.4, '1 : N', fontsize=8, fontweight='bold', color='#1d4ed8')
+    draw_entity('JOB_APPLICATIONS', [
+        'id (PK, UUID)',
+        'user_id (FK, UUID)',
+        'company (TEXT)',
+        'role (TEXT)',
+        'status (TEXT)',
+        'salary_range (TEXT)',
+        'date_applied (DATE)'
+    ], 3.8, 1.5)
 
-    ax.set_title('Figure 6.6: Entity-Relationship (ER) Diagram — Data Schema & Model', fontsize=12, fontweight='bold', pad=15)
+    draw_entity('INTERVIEW_SESSIONS', [
+        'id (PK, UUID)',
+        'user_id (FK, UUID)',
+        'question_id (TEXT)',
+        'user_answer (TEXT)',
+        'coverage_pct (INT)',
+        'feedback (TEXT)',
+        'created_at (TIMESTAMP)'
+    ], 7.1, 1.5)
+
+    # Relationships (Lines with 1:N cardinality)
+    # PROFILES -> JOB_ANALYSES
+    ax.plot([2.9, 3.8], [5.7, 5.7], color='#000000', lw=1.2)
+    ax.text(3.35, 5.85, '1 : N', ha='center', va='bottom', fontsize=7.5, fontweight='bold')
+
+    # JOB_ANALYSES -> LEARNING_PLANS
+    ax.plot([6.2, 7.1], [5.7, 5.7], color='#000000', lw=1.2)
+    ax.text(6.65, 5.85, '1 : N', ha='center', va='bottom', fontsize=7.5, fontweight='bold')
+
+    # PROFILES -> RESUMES
+    ax.plot([1.7, 1.7], [4.8, 3.3], color='#000000', lw=1.2)
+    ax.text(1.85, 4.05, '1 : N', ha='left', va='center', fontsize=7.5, fontweight='bold')
+
+    # PROFILES -> JOB_APPLICATIONS
+    ax.plot([2.9, 3.8], [5.2, 2.7], color='#000000', lw=1.2)
+    ax.text(3.15, 3.85, '1 : N', ha='center', va='center', fontsize=7.5, fontweight='bold')
+
+    # PROFILES / USER -> INTERVIEW_SESSIONS
+    ax.plot([6.2, 7.1], [2.4, 2.4], color='#000000', lw=1.2)
+    ax.text(6.65, 2.55, '1 : N', ha='center', va='bottom', fontsize=7.5, fontweight='bold')
+
     plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_6_er_diagram.png'), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, 'fig_6_6_er_diagram.png'), bbox_inches='tight', facecolor='#ffffff')
     plt.close()
 
 if __name__ == '__main__':
-    print('[+] Generating high-resolution system diagrams...')
+    print('Generating academic black-and-white system diagrams...')
     create_dfd_level_0()
-    print('[OK] Generated fig_6_1_dfd_level_0.png')
     create_dfd_level_1()
-    print('[OK] Generated fig_6_2_dfd_level_1.png')
-    create_use_case_diagram()
-    print('[OK] Generated fig_6_3_use_case.png')
-    create_activity_diagram()
-    print('[OK] Generated fig_6_4_activity.png')
-    create_architecture_diagram()
-    print('[OK] Generated fig_6_5_architecture.png')
+    create_use_case()
+    create_activity()
+    create_architecture()
     create_er_diagram()
-    print('[OK] Generated fig_6_6_er_diagram.png')
-    print('[DONE] All diagrams generated successfully!')
+    print('[OK] Generated 6 clean black-and-white system diagrams in report_assets/diagrams/')

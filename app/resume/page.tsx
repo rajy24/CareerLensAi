@@ -10,7 +10,8 @@ import {
   Sparkles, 
   CheckCircle2, 
   FileCheck,
-  AlertCircle 
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
 import { DashboardLayout } from '@/components/dashboard-layout';
 import { useCareerLens } from '@/lib/context';
@@ -28,7 +29,9 @@ export default function ResumePage() {
   const [pasteText, setPasteText] = useState('');
   const [fileName, setFileName] = useState('My_Resume.txt');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const [successToast, setSuccessToast] = useState('');
+  const [errorToast, setErrorToast] = useState('');
   const [customSkillInput, setCustomSkillInput] = useState('');
 
   // Profile fields state
@@ -38,36 +41,104 @@ export default function ResumePage() {
   const [bio, setBio] = useState(profile.bio || '');
   const [isSavingProfile, setIsSavingProfile] = useState(false);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const processFile = async (file: File) => {
     if (!file) return;
 
     setFileName(file.name);
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      const text = event.target?.result as string;
-      if (text) {
-        setIsProcessing(true);
-        try {
-          const res = await processResumeText(file.name, text);
-          setSuccessToast(`Extracted ${res.detected_skills.length} skills from ${file.name}`);
-        } catch {
-          // Fallback
-        } finally {
-          setIsProcessing(false);
-        }
+    setIsProcessing(true);
+    setErrorToast('');
+    setSuccessToast('');
+
+    try {
+      // Send file to server extraction endpoint (supports PDF, DOCX, TXT, MD)
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/extract-resume', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Failed to extract text from file.');
       }
-    };
-    reader.readAsText(file);
+
+      const extractedText = data.text;
+      setPasteText(extractedText);
+
+      // Process skills and sync with user profile
+      const res = await processResumeText(file.name, extractedText);
+      setSuccessToast(
+        `Uploaded "${file.name}" — extracted text and detected ${res.detected_skills.length} technical competencies!`
+      );
+    } catch (err: any) {
+      console.warn('Server extraction error, trying client fallback for text files:', err);
+
+      // Fallback for plain text or markdown files if offline
+      if (file.name.endsWith('.txt') || file.name.endsWith('.md')) {
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+          const text = event.target?.result as string;
+          if (text) {
+            setPasteText(text);
+            const res = await processResumeText(file.name, text);
+            setSuccessToast(`Extracted ${res.detected_skills.length} skills from ${file.name}`);
+          }
+        };
+        reader.readAsText(file);
+      } else {
+        setErrorToast(
+          err.message || 'Could not read the uploaded file. Please verify it is a valid PDF, Word (.docx), or text document.'
+        );
+      }
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      processFile(file);
+    }
+    // Reset file input so selecting the same file again triggers change
+    e.target.value = '';
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      processFile(file);
+    }
   };
 
   const handleProcessPastedText = async () => {
     if (!pasteText.trim()) return;
     setIsProcessing(true);
+    setErrorToast('');
     try {
       const res = await processResumeText(fileName || 'Pasted_Resume.txt', pasteText);
       setSuccessToast(`Extracted ${res.detected_skills.length} skills from résumé text`);
-      setPasteText('');
+    } catch (err: any) {
+      setErrorToast(err.message || 'Failed to extract competencies from pasted text.');
     } finally {
       setIsProcessing(false);
     }
@@ -110,6 +181,7 @@ export default function ResumePage() {
           </p>
         </div>
 
+        {/* Success Toast */}
         {successToast && (
           <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -122,6 +194,19 @@ export default function ResumePage() {
           </div>
         )}
 
+        {/* Error Toast */}
+        {errorToast && (
+          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+              <span>{errorToast}</span>
+            </div>
+            <button onClick={() => setErrorToast('')} className="text-rose-700 hover:text-rose-950 font-bold">
+              &times;
+            </button>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Résumé Upload & Extraction (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
@@ -129,29 +214,51 @@ export default function ResumePage() {
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
                   <FileCheck className="w-4 h-4 text-blue-600" />
-                  <h3 className="text-sm font-bold text-slate-900">1. Upload or Paste Résumé Text</h3>
+                  <h3 className="text-sm font-bold text-slate-900">1. Upload or Paste Résumé</h3>
                 </div>
-                <span className="text-[11px] text-slate-400 font-medium">Text &bull; TXT &bull; Markdown</span>
+                <span className="text-[11px] text-slate-400 font-medium">PDF &bull; DOCX &bull; TXT &bull; Markdown</span>
               </div>
 
               {/* File Dropzone */}
-              <label className="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-slate-50/50 hover:bg-blue-50/20 block">
-                <Upload className="w-6 h-6 text-slate-400 mb-2" />
-                <span className="text-xs font-semibold text-slate-700">Click to upload résumé file</span>
-                <span className="text-[11px] text-slate-400 mt-0.5">Supports text and plain document files</span>
+              <label 
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors block ${
+                  isDragging 
+                    ? 'border-blue-500 bg-blue-50/40' 
+                    : 'border-slate-200 hover:border-blue-400 bg-slate-50/50 hover:bg-blue-50/20'
+                }`}
+              >
+                {isProcessing ? (
+                  <div className="flex flex-col items-center py-2">
+                    <Loader2 className="w-7 h-7 text-blue-600 animate-spin mb-2" />
+                    <span className="text-xs font-semibold text-slate-700">Reading &amp; extracting résumé...</span>
+                    <span className="text-[11px] text-slate-400 mt-0.5">Detecting technical skills</span>
+                  </div>
+                ) : (
+                  <>
+                    <Upload className="w-6 h-6 text-slate-400 mb-2" />
+                    <span className="text-xs font-semibold text-slate-700">Click to upload résumé file or drag &amp; drop</span>
+                    <span className="text-[11px] text-slate-500 mt-1">
+                      Supports <strong>PDF (.pdf)</strong>, <strong>Word (.docx)</strong>, <strong>TXT</strong>, and <strong>Markdown</strong>
+                    </span>
+                  </>
+                )}
                 <input 
                   type="file" 
-                  accept=".txt,.md,.rtf" 
-                  onChange={handleFileUpload} 
+                  accept=".pdf,.docx,.doc,.txt,.md,.rtf,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/*"
+                  onChange={handleFileInputChange} 
+                  disabled={isProcessing}
                   className="hidden" 
                 />
               </label>
 
               <div className="relative flex justify-center text-xs">
-                <span className="px-2 bg-white text-slate-400 font-medium">Or paste résumé content</span>
+                <span className="px-2 bg-white text-slate-400 font-medium">Or review / paste résumé content</span>
               </div>
 
-              {/* Paste Area */}
+              {/* Paste / Review Area */}
               <div>
                 <textarea
                   rows={8}
@@ -184,8 +291,17 @@ Core Competencies:
                   disabled={isProcessing || !pasteText.trim()}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs disabled:opacity-40 transition-colors"
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>{isProcessing ? 'Extracting...' : 'Extract & Sync Skills'}</span>
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Extracting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Extract &amp; Sync Skills</span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>
