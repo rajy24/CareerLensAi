@@ -39,9 +39,12 @@ export async function POST(req: NextRequest) {
       }
     } else if (lowerName.endsWith('.docx') || file.type.includes('wordprocessingml')) {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const mammoth = require('mammoth');
-        const result = await mammoth.extractRawText({ buffer });
+        const mammothModule = await import('mammoth');
+        const extractFn = mammothModule.extractRawText || (mammothModule as any).default?.extractRawText;
+        if (!extractFn) {
+          throw new Error('Mammoth extractRawText is unavailable');
+        }
+        const result = await extractFn({ buffer });
         extractedText = result.value || '';
       } catch (docxErr: any) {
         console.error('DOCX parsing error via mammoth:', docxErr);

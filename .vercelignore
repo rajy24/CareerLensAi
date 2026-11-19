@@ -1,0 +1,10 @@
+# Vercel Ignore File
+# Prevents large binary files, reports, and scripts from bloating the Vercel deployment and serverless bundles
+
+CareerLens_AI_Field_Project_Report_*.docx
+CareerLens_AI_Field_Project_Report_*.pdf
+CareerLens_AI_Presentation_*.pptx
+report_assets/
+scripts/
+*.py
+*.docx
