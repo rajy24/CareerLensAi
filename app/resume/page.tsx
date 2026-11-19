@@ -238,16 +238,22 @@ export default function ResumePage() {
                   </div>
                 ) : (
                   <>
-                    <Upload className="w-6 h-6 text-slate-400 mb-2" />
-                    <span className="text-xs font-semibold text-slate-700">Click to upload résumé file or drag &amp; drop</span>
-                    <span className="text-[11px] text-slate-500 mt-1">
+                    <Upload className="w-6 h-6 text-blue-600 mb-2" />
+                    <span className="text-xs font-semibold text-slate-800">Click to upload résumé file or drag &amp; drop</span>
+                    <span className="mt-2 inline-flex items-center gap-1 px-3 py-1 rounded-md bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200">
+                      Browse Files (.pdf, .docx, .txt)
+                    </span>
+                    <span className="text-[11px] text-slate-500 mt-2">
                       Supports <strong>PDF (.pdf)</strong>, <strong>Word (.docx)</strong>, <strong>TXT</strong>, and <strong>Markdown</strong>
+                    </span>
+                    <span className="text-[10px] text-slate-400 mt-0.5">
+                      (Drag &amp; drop works directly from any folder)
                     </span>
                   </>
                 )}
                 <input 
                   type="file" 
-                  accept=".pdf,.docx,.doc,.txt,.md,.rtf,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/*"
+                  accept=".pdf,.docx,.doc,.txt,.md,application/pdf"
                   onChange={handleFileInputChange} 
                   disabled={isProcessing}
                   className="hidden" 
